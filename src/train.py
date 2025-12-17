@@ -13,7 +13,11 @@ def train_model(model, train_dataset):
         learning_rate=LEARNING_RATE,
         warmup_steps=WARMUP_STEPS,
         max_steps=MAX_STEPS,
-        fp16=False,
+
+        fp16=False,        
+        bf16=False,       
+        gradient_checkpointing=False,
+
         logging_steps=5,
         save_steps=50,
         report_to="none",
