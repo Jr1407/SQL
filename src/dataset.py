@@ -13,9 +13,8 @@ def load_text2sql_dataset():
     dataset = load_dataset(DATASET_NAME)
 
     dataset = dataset["train"].train_test_split(
-        train_size=100_000,
-        test_size=5_000,
-        seed=42
-    )
+    test_size=0.05,
+    seed=42
+)
 
     return dataset["train"], dataset["test"]
