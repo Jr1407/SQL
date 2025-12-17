@@ -1,5 +1,4 @@
 # src/train.py
-
 from trl import SFTTrainer
 from transformers import TrainingArguments
 from .config import (
@@ -12,11 +11,7 @@ from .config import (
 )
 
 
-def train_model(model, tokenizer, train_dataset):
-    """
-    Fine-tunes Gemma-2B using SFTTrainer (PEFT-based)
-    """
-
+def train_model(model, train_dataset):
     training_args = TrainingArguments(
         output_dir=OUTPUT_DIR,
         per_device_train_batch_size=PER_DEVICE_TRAIN_BATCH_SIZE,
@@ -25,17 +20,16 @@ def train_model(model, tokenizer, train_dataset):
         warmup_steps=WARMUP_STEPS,
         max_steps=MAX_STEPS,
         fp16=True,
-        logging_steps=10,
+        logging_steps=5,
         save_steps=50,
         report_to="none",
     )
 
     trainer = SFTTrainer(
-    model=model,
-    args=training_args,
-    train_dataset=train_dataset,
-    dataset_text_field="sql_prompt",
-)
-
+        model=model,
+        args=training_args,
+        train_dataset=train_dataset,
+        dataset_text_field="sql_prompt",
+    )
 
     trainer.train()
