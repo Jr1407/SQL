@@ -32,10 +32,10 @@ def train_model(model, tokenizer, train_dataset):
 
     trainer = SFTTrainer(
     model=model,
-    tokenizer=tokenizer,
     args=training_args,
     train_dataset=train_dataset,
     dataset_text_field="sql_prompt",
 )
+
 
     trainer.train()
