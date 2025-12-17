@@ -1,18 +1,12 @@
-# src/train.py
 from trl import SFTTrainer
 from transformers import TrainingArguments
-from .config import (
-    OUTPUT_DIR,
-    PER_DEVICE_TRAIN_BATCH_SIZE,
-    GRADIENT_ACCUMULATION_STEPS,
-    LEARNING_RATE,
-    WARMUP_STEPS,
-    MAX_STEPS,
-)
+from .config import *
 
+def formatting_func(example):
+    return example["sql_prompt"]
 
 def train_model(model, train_dataset):
-    training_args = TrainingArguments(
+    args = TrainingArguments(
         output_dir=OUTPUT_DIR,
         per_device_train_batch_size=PER_DEVICE_TRAIN_BATCH_SIZE,
         gradient_accumulation_steps=GRADIENT_ACCUMULATION_STEPS,
@@ -27,9 +21,9 @@ def train_model(model, train_dataset):
 
     trainer = SFTTrainer(
         model=model,
-        args=training_args,
         train_dataset=train_dataset,
-        dataset_text_field="sql_prompt",
+        args=args,
+        formatting_func=formatting_func,
     )
 
     trainer.train()
