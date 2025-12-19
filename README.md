@@ -1,0 +1,1 @@
+A program which is developed through AI which can convert any plain English texts and questions into SQL queries ,which can be used for learning purpose, and also can be used to detect mistakes and provide correct SQL query.
